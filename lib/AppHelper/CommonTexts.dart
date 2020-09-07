@@ -1,4 +1,3 @@
 class CommonTexts {
-  String app_logo = "Img/logo.png";
-
+ static String app_logo = "Img/logo.png";
 }

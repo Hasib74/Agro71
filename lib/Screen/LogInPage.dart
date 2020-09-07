@@ -1,3 +1,7 @@
+import 'package:agro71/AppHelper/AppColors.dart';
+import 'package:agro71/AppHelper/AppTextStyle.dart';
+import 'package:agro71/AppHelper/CommonTexts.dart';
+import 'package:agro71/AppHelper/GlobalData.dart';
 import 'package:agro71/DataProvider/SharePrefaranceProvider.dart';
 import 'package:agro71/DataProvider/UserProvider.dart';
 import 'package:agro71/GlobalWidgets/Dialogs/Dialogs.dart';
@@ -31,7 +35,7 @@ class _LogInPageState extends State<LogInPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appColors.background_color_one,
+      backgroundColor: AppColors.background_color_one,
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width / 1.3,
@@ -46,7 +50,7 @@ class _LogInPageState extends State<LogInPage> {
                   margin: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: appColors.background_color_one,
+                      color: AppColors.background_color_one,
                       boxShadow: [
                         BoxShadow(
                             color: Theme.of(context).hintColor.withOpacity(0.2),
@@ -57,7 +61,7 @@ class _LogInPageState extends State<LogInPage> {
                     children: <Widget>[
                       SizedBox(height: 25),
                       Image.asset(
-                        commonTexts.app_logo,
+                        CommonTexts.app_logo,
                         height: 120,
                         width: 120,
                       ),
@@ -65,7 +69,7 @@ class _LogInPageState extends State<LogInPage> {
                       new TextField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(color: appColors.golobalColor_two),
+                        style: TextStyle(color: AppColors.golobalColor_two),
                         onChanged: (value) {
                           if (value.toString().contains("@")) {
                             setState(() {
@@ -82,23 +86,23 @@ class _LogInPageState extends State<LogInPage> {
                               !_emailValid ? 'Not an email address' : null,
                           hintText: 'Email Address',
                           hintStyle:
-                              TextStyle(color: appColors.golobalColor_one),
+                              TextStyle(color: AppColors.golobalColor_one),
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: appColors.golobalColor_one)),
+                                  color: AppColors.golobalColor_one)),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: appColors.golobalColor_one)),
+                                  color: AppColors.golobalColor_one)),
                           prefixIcon: Icon(
                             Icons.person_outline,
-                            color: appColors.golobalColor_one,
+                            color: AppColors.golobalColor_one,
                           ),
                         ),
                       ),
                       SizedBox(height: 20),
                       new TextField(
                         controller: _passwordController,
-                        style: TextStyle(color: appColors.golobalColor_one),
+                        style: TextStyle(color: AppColors.golobalColor_one),
                         keyboardType: TextInputType.text,
                         obscureText: !_showPassword,
                         onChanged: (value) {
@@ -117,17 +121,17 @@ class _LogInPageState extends State<LogInPage> {
                               !_passwordValid ? 'At least 6 character' : null,
                           hintText: 'Password',
                           hintStyle: Theme.of(context).textTheme.body1.merge(
-                                TextStyle(color: appColors.golobalColor_one),
+                                TextStyle(color: AppColors.golobalColor_one),
                               ),
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: appColors.golobalColor_one)),
+                                  color: AppColors.golobalColor_one)),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: appColors.golobalColor_one)),
+                                  color: AppColors.golobalColor_one)),
                           prefixIcon: Icon(
                             Icons.lock_outline,
-                            color: appColors.golobalColor_one,
+                            color: AppColors.golobalColor_one,
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -135,7 +139,7 @@ class _LogInPageState extends State<LogInPage> {
                                 _showPassword = !_showPassword;
                               });
                             },
-                            color: appColors.golobalColor_one,
+                            color: AppColors.golobalColor_one,
                             icon: Icon(_showPassword
                                 ? Icons.visibility_off
                                 : Icons.visibility),
@@ -145,9 +149,9 @@ class _LogInPageState extends State<LogInPage> {
                       SizedBox(height: 20),
                       RoundedLoadingButton(
                         elevation: 6,
-                        color: appColors.golobalColor_two,
+                        color: AppColors.golobalColor_two,
                         child: Text('${language.logIn}',
-                            style: appTextStyle.button_text_style),
+                            style: AppTextStyle.button_text_style),
                         controller: _btnController,
                         onPressed: () {
                           setState(() {
@@ -194,18 +198,17 @@ class _LogInPageState extends State<LogInPage> {
     userProvider.logIn(email, password).then((value) {
       print("Value == ${value}");
 
-      if (value.status) {
+      if (value != null && value.status) {
         sp_provider.storeAdmin(context, value.adminType, value.token);
 
         sp_provider.readAdmin().then((value) {
-          globalData.adminType = value[0];
-          globalData.token = value[1];
+          GlobalData.adminType = value[0];
+          GlobalData.token = value[1];
 
-          print("User  ${globalData.adminType}   token ${globalData.token}");
+          print("User  ${GlobalData.adminType}   token ${GlobalData.token}");
           Navigator.pushReplacementNamed(context, routeNames.home_page);
         });
-      } else if (!value.status) {
-
+      } else if (!value.status || value == null) {
         _btnController.reset();
         global_dilogs.awsomDialog("${language.invalid_user}", context,
             "${language.error}", MyDialogType.ERROR);

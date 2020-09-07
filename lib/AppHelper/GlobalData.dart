@@ -1,10 +1,10 @@
 class GlobalData {
+  static String admin_info = "admin info";
+  static String admin = "admin";
+  static String super_admin = "super admin";
+  static String add_admin = "Add Admin";
+  static String token;
+  static String adminType;
 
-   String admin_info="admin info";
-   String admin ="admin" ;
-   String super_admin ="super admin";
-
-   String token;
-   String adminType;
 
 }

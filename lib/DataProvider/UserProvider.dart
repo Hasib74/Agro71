@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:agro71/Model/LogInResponse.dart';
-import 'package:agro71/appUrl.dart';
+import 'package:agro71/appUrlRepo.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider {
@@ -17,11 +17,9 @@ class UserProvider {
     };
 
     await http
-        .post("${basic_api}admin/login",
-            body: json.encode(body), headers: header)
+        .post(APIUrl.logIn, body: json.encode(body), headers: header)
         .then((value) {
-
-          print("Admin rsponse  ${value.body}");
+      print("Admin resoponse  ${value.body}");
 
       logInResponse = LogInResponse.fromJson(json.decode(value.body));
     }).catchError((err) {

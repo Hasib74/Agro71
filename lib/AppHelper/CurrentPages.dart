@@ -1,0 +1,10 @@
+enum CurrentPage {
+  DASHBORD,
+  ALLADMIN,
+  EXPANCES,
+  CUSTOMERSE,
+  PRODUCTS,
+  PROBLEM,
+  EMPLOYS,
+  REQUEST,
+}

@@ -33,6 +33,16 @@ dependencies:
   rounded_loading_button: ^1.0.0
   http: ^0.12.2
   awesome_dialog: ^1.1.3
+  expandable: ^4.1.4
+  provider: ^4.3.2
+  page_transition: ^1.1.6
+  flutter_icons: ^1.1.0
+  image_picker: ^0.6.7+7
+  universal_html: ^1.2.3
+  cryptoutils: ^0.4.0
+  path_provider: ^1.6.14
+  dio: ^3.0.10
+  image:
 
 
 dev_dependencies:
